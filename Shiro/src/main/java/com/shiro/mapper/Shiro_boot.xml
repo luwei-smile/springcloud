@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shiro.mapper.Shiro_boot">
+
+	<!-- 根据类别代码查询数据 -->
+	<select id="FindOne" parameterType="String" resultType="com.shiro.pojo.Login">
+		SELECT * FROM login WHERE username = #{dict_type_code}
+	</select>
+
+</mapper>
