@@ -1,0 +1,85 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>springboot-01</groupId>
+  <artifactId>springboot-01</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  
+  <parent>
+  	<groupId>org.springframework.boot</groupId>
+  	<artifactId>spring-boot-starter-parent</artifactId>
+  	<version>2.0.0.RELEASE</version>
+  </parent>
+  
+  <dependencies>
+  <!-- springboot启动器 -->
+  	<dependency>
+  		<groupId>org.springframework.boot</groupId>
+  		<artifactId>spring-boot-starter-web</artifactId>
+  	</dependency>
+  	
+  	<!-- thymeleaf启动器 模板引擎-->
+	  <dependency>
+	  		<groupId>org.springframework.boot</groupId>
+	  		<artifactId>spring-boot-starter-thymeleaf</artifactId>
+	  	</dependency>
+	  	
+	  	<!-- Mybatis启动器 -->
+	 <dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>1.3.0</version>
+		</dependency>
+		
+	 <!-- 数据库驱动 -->
+  	<dependency>
+         <groupId>mysql</groupId>
+         <artifactId>mysql-connector-java</artifactId>
+    </dependency>
+  
+  <!-- druid数据库连接池 -->
+  		<dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.0.29</version>
+        </dependency>
+  	 
+  	<!-- 添加junit 环境的jar 包-->
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-test</artifactId>
+	</dependency>
+	
+	<!-- DevTools 的坐标-->
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-devtools</artifactId>
+		<optional>true</optional>
+	</dependency>
+	
+<!-- Ehcache 坐标-->
+	<dependency>
+		<groupId>net.sf.ehcache</groupId>
+		<artifactId>ehcache</artifactId>
+	</dependency>
+	
+  	<dependency><!--Webjars版本定位工具（前端）-->
+                <groupId>org.webjars</groupId>
+                <artifactId>bootstrap</artifactId>
+                <version>4.3.1</version>
+            </dependency>
+
+            <dependency><!--Jquery组件（前端）-->
+                <groupId>org.webjars</groupId>
+                <artifactId>jquery</artifactId>
+                <version>3.4.1</version>
+            </dependency>
+  	<!--导入配置文件处理器，配置文件进行绑定就会有提示-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+  	
+  </dependencies>
+  
+</project>

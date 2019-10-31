@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>我的thymeleaf练习</title>
+		
+	</head>
+	<body>
+		<h1>order页面</h1>
+		<div th:text="${value}">这是显示类容的地方</div>
+		<div th:utext="${value}">这是显示类容的地方</div>
+		<hr>
+		<h2 th:each="user:${users}">[[${user}]]</h2>
+		<h2 th:text="${value}" th:each="user:${users}"></h2>
+		<hr>
+		<h2 th:each="user:${users}">[(${user})]</h2>
+		<h2 th:utext="${value}" th:each="user:${users}"></h2>
+	</body>
+</html>
