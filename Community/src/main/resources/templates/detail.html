@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>文章详情</title>
+<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/comment.css" rel="stylesheet">
+<link href="css/editormd.preview.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/comment.js"></script>
+<script type="text/javascript" src="js/editormd.min.js"></script>
+<script type="text/javascript" src="lib/prettify.min.js"></script>
+<script type="text/javascript" src="lib/marked.min.js"></script>
+</head>
+<body>
+	<nav class="navbar navbar-default">
+		<!-- 引入顶部栏 -->
+		<div th:replace="~{common/topcommon::#topcommon}"></div>
+	</nav>
+	<div class="container-fluid main">
+		<div class="row">
+			<div class="col-lg-9 col-xs-12 col-sm-12 col-md-12">
+				<h3>[[${article.title}]]</h3>
+				<br>
+				<span class="textdexcription">作者:[[${reader.name}]] | 阅读数:[[${article.viewcount}]] | 发布时间:[[${article.create_time}]]</span>
+				<hr>
+				<div id="question-show">
+				<textarea style="display: none;" th:text="${article.description}"></textarea>
+				</div>
+				<!-- 富文本显示 -->
+				<script type="text/javascript">
+					$(function() {
+						editormd.markdownToHTML("question-show", {});
+					});
+				</script>
+				<span class="label label-info glyphicon glyphicon-tags label-tags" th:each="tag:${article.tag.split(',')}"> [[${tag}]]</span>
+				<hr>
+				<a th:href="@{/updatearticle(articleid=${article.id})}">
+					<span class="glyphicon glyphicon-search"></span>
+					&nbsp编辑
+				</a>
+				&nbsp &nbsp &nbsp
+				<a href="#sendbutton">
+					<span class="glyphicon glyphicon-comment"></span>
+					&nbsp发表评论
+				</a>
+				<hr>
+				<h4>&nbsp &nbsp &nbsp[[${article.commentcount}]]个回复</h4>
+				<hr>
+				<!-- 评论列表 -->
+				<div class="media commentcontent-body" th:each="comment:${comment_pages}">
+					<div class="media-left">
+						<a href="#">
+							<img class="media-object img-rounded  java" th:src="${comment.reader.protrait}">
+						</a>
+					</div>
+					<div class="media-body">
+						<h4 class="media-heading">[[${comment.reader.name}]]</h4>
+						[[${comment.commentcontent}]]
+					</div>
+					<div class="commenticon">
+						<span class="glyphicon glyphicon-thumbs-up iconlike" title="大佬"></span>
+						<span class="glyphicon glyphicon-thumbs-down icondislike" title="菜鸡"></span>
+						<span class="glyphicon glyphicon-comment iconcomment" title="评论" data-toggle="collapse"
+							th:data-target="'#collapseExample'+${comment.commentid}"></span>
+						&nbsp &nbsp
+						<span class="glyphicon glyphicon-menu-right iconcomment" title="更多" th:data-target="'#reply'+${comment.commentid}"
+							data-toggle="collapse" onclick="show(this)" th:id="${comment.commentid}" th:data-id="${comment.commentid}"></span>
+						<span class="pull-right" aria-hidden="true">[[${comment.commentdata}]]</span>
+					</div>
+
+					<!-- 隐藏二級评论输入框 -->
+					<div class="collapse" th:id="collapseExample+${comment.commentid}">
+						<div class="col-lg-6 secondary-reply">
+							<div class="input-group">
+								<input th:id="secondary+${comment.commentid}" type="text" class="form-control"
+									th:placeholder="'回复'+${comment.reader.name}+':'">
+								<span class="input-group-btn">
+									<button class="btn btn-danger" type="button" onclick="secondary(this)" th:data-id="${comment.commentid}">回复</button>
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- 隐藏二級评论列表 -->
+					<div class="collapse" th:id="reply+${comment.commentid}"></div>
+
+				</div>
+
+				<!-- 分页栏 -->
+				<nav aria-label="Page navigation">
+					<ul class="pagination pagination-lg btn-publish">
+						<li>
+							<a th:href="@{/detail(page=${paging.pageNumber}-1)}" aria-label="Previous" th:if="${paging.pageNumber} != 1">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+						<li th:each="page:${paging.pagelist}" th:class="${page == paging.pageNumber}?'active':''">
+							<a th:href="@{/detail(articleid=${article.id},page=${page})}">[[${page}]]</a>
+						</li>
+						<li>
+							<a th:href="@{/detail(page=${paging.pageNumber}+1)}" aria-label="Next" th:if="${paging.pageNumber} != ${paging.pages}">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+
+				<br>
+				<input type="hidden" th:value="${article.id}" id="articleid">
+				<div id="sendbutton">
+					<textarea class="form-control" rows="6" id="comment" placeholder="请输入您评论..."></textarea>
+					<br>
+					<button type="button" class="btn btn-success btn-publish" onclick="comment()">发表评论</button>
+				</div>
+			</div>
+			<div class="col-lg-3 col-xs-12 col-sm-12 col-md-12">
+				<h4>发起人</h4>
+				<div class="media">
+					<div class="media-left">
+						<a href="#">
+							<img class="media-object img-circle  java" th:src="${reader.protrait}">
+						</a>
+					</div>
+					<div class="media-body">
+						<h5 class="media-heading">[[${reader.name}]]</h5>
+					</div>
+				</div>
+				<hr>
+
+				<h4>邮件邀请别人回复:</h4>
+				<form action="@{}" method="get">
+					<div class="form-group">
+						<div class="col-lg-9 col-xs-12 col-sm-12 col-md-12">
+							<input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+						</div>
+						<div class="col-lg-3 col-xs-12 col-sm-12 col-md-12">
+							<button type="submit" class="btn btn-success btn-publish">邀请</button>
+						</div>
+					</div>
+				</form>
+				<br>
+				<br>
+				<hr>
+				<h3>相关文章推荐</h3>
+				<ul class="list-group" th:each="recommend:${Recommends}">
+				  <h4><a th:href="@{/detail(articleid=${recommend.id},page=1)}"><li>[[${recommend.title}]]</li></a></h4>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+@CHARSET "UTF-8";
+
+.main {
+	margin: 0px 30px 0px 30px;
+	background: #fafafa;
+}
+
+body {
+	background: #c8c8c8;
+}
+
+.btn-publish {
+	float: right;
+	margin-right: 20px;
+	margin-bottom: 10px;
+}
+
+a {
+	text-decoration: none;
+	font-weight: 300;
+}
+
+.textdexcription {
+	font-size: 12px;
+	font-weight: normal;
+	color: #999;
+}
+
+.java {
+	width: 55px;
+}
+
+.rowlist {
+	margin-top: 70px;
+}
+
+.commenticon { /* 调整icon前后左右边距的距离 */
+	margin: 10px 10px 0px 65px;
+	font-size: 18px;
+	color: #999;
+}
+
+.commenticon .icondislike { /* 调整几个icon之间的距离 */
+	margin: 0px 15px;
+}
+/* 设置几个icon的鼠标悬浮事件 */
+.commenticon .iconlike:hover {
+	color: red;
+}
+
+.commenticon .icondislike:hover {
+	color: black;
+}
+
+.commenticon .iconcomment:hover {
+	color: #337AB7;
+}
+
+.commentcontent-body { /* 设置评论列表的下边框线 */
+	border-bottom: 1px #999 solid;
+}
+
+.secondary-body { /* 设置二级评论列表的上边框线 */
+	border-top: 1px #999 solid;
+	margin-left: 5%;
+}
+
+/* 对于二级回复框的位置调整 */
+.commentcontent-body .secondary-reply {
+	float: right;
+}
+
+/* 调整标签的前后位置 */
+.label-tags {
+	margin:4px 6px 2px 0px;
+}
+
+.row .tags{
+	    height: 150px;
+}

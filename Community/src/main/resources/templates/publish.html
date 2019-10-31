@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>发送消息</title>
+<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/comment.css" rel="stylesheet">
+<link href="css/editormd.min.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/comment.js"></script>
+<script type="text/javascript" src="js/editormd.min.js"></script>
+</head>
+<body>
+	<nav class="navbar navbar-default">
+		<!-- 引入顶部栏 -->
+		<div th:replace="~{common/topcommon::#topcommon}"></div>
+	</nav>
+
+	<div class="container-fluid main">
+		<div class="row">
+			<div class="col-lg-9 col-xs-12 col-sm-12 col-md-12">
+				<h3>
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					发布
+				</h3>
+				<hr>
+				<form th:action="@{/check/addarticle}" method="post">
+					<input type="hidden" th:value="${article}==null?'':${article.id}" name="id">
+					<div class="form-group">
+						<label for="exampleInputEmail1">输入文章标题</label>
+						<input type="text" class="form-control" name="title" id="title" placeholder="输入文章标题"
+							th:value="${article}==null?'':${article.title}">
+					</div>
+
+					<div class="form-group" id="question-editor">
+						<label for="exampleInputEmail1">输入文章类容</label>
+						<textarea name="description" class="form-control " id="description" cols="30" rows="15" style="display: none;"
+							th:text="${article}==null?'':${article.description}"></textarea>
+					</div>
+					<!-- 富文本编辑 -->
+					<script type="text/javascript">
+						$(function() {
+							var editor = editormd("question-editor", {
+								width : "100%",
+								height : "400px",
+								path : "/lib/",
+								delay:0,
+								watch:false,
+								placeholder:"请输入问题描述...",
+								imageUpload:true,
+								imageFormat:["jpg","jpeg","gif","png","bmp","webp"],
+								imageUploadURL:"/pic/upload"
+								
+							});
+						});
+					</script>
+
+					<div class="form-group">
+						<label for="exampleInputEmail1">输入文章标签</label>
+						<input type="text" class="form-control" name="tag" id="tag" placeholder="选择文章标签"
+							th:value="${article}==null?'':${article.tag}" autocomplete="off" readonly="readonly" data-toggle="collapse"
+							data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onclick="showtags('开发语言','language')">
+					</div>
+					<span th:text="${msg}" style="color: red"></span>
+					<button type="submit" class="btn btn-success btn-publish">提交</button>
+					<div class="collapse tags" id="collapseExample">
+						<ul class="nav nav-tabs" role="tablist">
+							<li role="presentation" class="active">
+								<a href="#language" role="tab" data-toggle="tab" onclick="showtags('开发语言','language')">开发语言</a>
+							</li>
+							<li role="presentation">
+								<a href="#frame" role="tab" data-toggle="tab" onclick="showtags('平台框架','frame')">平台框架</a>
+							</li>
+							<li role="presentation">
+								<a href="#service" role="tab" data-toggle="tab" onclick="showtags('服务器','service')">服务器</a>
+							</li>
+							<li role="presentation">
+								<a href="#database" role="tab" data-toggle="tab" onclick="showtags('数据库','database')">数据库</a>
+							</li>
+							<li role="presentation">
+								<a href="#tools" role="tab" data-toggle="tab" onclick="showtags('开发工具','tools')">开发工具</a>
+							</li>
+							<li role="presentation">
+								<a href="#system" role="tab" data-toggle="tab" onclick="showtags('系统','system')">系统</a>
+							</li>
+							<li role="presentation">
+								<a href="#others" role="tab" data-toggle="tab" onclick="showtags('其他','others')">其他</a>
+							</li>
+						</ul>
+						<div class="tab-content" id="showtags">
+							<div role="tabpanel" class="tab-pane active" id="language"></div>
+							<div role="tabpanel" class="tab-pane" id="frame"></div>
+							<div role="tabpanel" class="tab-pane" id="service"></div>
+							<div role="tabpanel" class="tab-pane" id="database"></div>
+							<div role="tabpanel" class="tab-pane" id="tools"></div>
+							<div role="tabpanel" class="tab-pane" id="system"></div>
+							<div role="tabpanel" class="tab-pane" id="others"></div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="col-lg-3 col-xs-12 col-sm-12 col-md-12"></div>
+		</div>
+	</div>
+
+</body>
+</html>

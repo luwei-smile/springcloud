@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/comment.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+</head>
+<body>
+	<!-- 导航栏 -->
+	<div class="container-fluid" id="topcommon">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+				aria-expanded="false">
+				<span class="sr-only">菜鸟论坛</span>
+			</button>
+			<a class="navbar-brand" href="/">菜鸟论坛</a>
+		</div>
+
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<form class="navbar-form navbar-left">
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="关键词搜索">
+				</div>
+				<button type="submit" class="btn btn-default">Submit</button>
+			</form>
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a th:href="@{/toaddarticle}">发布文章</a>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+						th:if="${session.reader}!=null">
+						[[${session.reader.name}]]
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="#">
+								消息中心&nbsp&nbsp
+								<span class="badge">42</span>
+							</a>
+						</li>
+						<li>
+							<a th:href="@{/persional(page=1)}">个人中心</a>
+						</li>
+						<li role="separator" class="divider"></li>
+						<li>
+							<a href="#">退出登录</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<!-- 个人中心的侧边栏 -->
+	<div class="list-group rowlist" id="sidecommn">
+		<a th:href="@{/persional(page=1)}" th:class="${profiltype}=='最新状态'?'list-group-item active':'list-group-item'">
+			<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+			&nbsp &nbsp最新状态
+		</a>
+
+		<a th:href="@{/newreply(page=1)}" th:class="${profiltype}=='我的最新回复'?'list-group-item active':'list-group-item'">
+			<span class="glyphicon glyphicon-lamp" aria-hidden="true"></span>
+			&nbsp &nbsp我的最新回复 
+		</a>
+
+		<a th:href="@{/draft(page=1)}" th:class="${profiltype}=='我的草稿'?'list-group-item active':'list-group-item'">
+			<span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+			&nbsp &nbsp我的草稿
+		</a>
+
+		<a th:href="@{/collection(page=1)}" th:class="${profiltype}=='我的收藏'?'list-group-item active':'list-group-item'">
+			<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
+			&nbsp &nbsp我的收藏
+		</a>
+
+		<a th:href="@{/reply(page=1)}" th:class="${profiltype}=='邀我回复的话题'?'list-group-item active':'list-group-item'">
+			<span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
+			&nbsp &nbsp邀请我回复的话题
+		</a>
+		<hr>
+		<a th:href="@{/topic(page=1)}" th:class="${profiltype}=='所有话题'?'list-group-item active':'list-group-item'">
+			<span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+			&nbsp &nbsp所有话题
+		</a>
+
+		<a th:href="@{/users(page=1)}" th:class="${profiltype}=='所有用户'?'list-group-item active':'list-group-item'">
+			<span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>
+			&nbsp &nbsp所有用户
+		</a>
+
+		<a th:href="@{/invite(page=1)}" th:class="${profiltype}=='邀请好友加入'?'list-group-item active':'list-group-item'">
+			<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+			&nbsp &nbsp邀请好友加入
+		</a>
+		<hr>
+	</div>
+
+	<!-- 分页条 -->
+	<nav aria-label="Page navigation" id="pagingbar">
+		<ul class="pagination pagination-lg btn-publish">
+			<li>
+				<a th:href="@{/pages(page=${paging.pageNumber}-1)}" aria-label="Previous" th:if="${paging.pageNumber} != 1">
+					<span aria-hidden="true">&laquo;</span>
+				</a>
+			</li>
+			<li th:each="page:${paging.pagelist}" th:class="${page == paging.pageNumber}?'active':''">
+				<a th:href="@{/pages(page=${page})}">[[${page}]]</a>
+			</li>
+			<li>
+				<a th:href="@{/pages(page=${paging.pageNumber}+1)}" aria-label="Next" th:if="${paging.pageNumber} != ${paging.pages}">
+					<span aria-hidden="true">&raquo;</span>
+				</a>
+			</li>
+		</ul>
+	</nav>
+
+
+</body>
+</html>

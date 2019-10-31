@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>首页</title>
+<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/comment.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+</head>
+<script type="text/javascript">
+	window.onload = function(){
+		if(window.localStorage.getItem("code") == "true"){
+			window.close();
+			window.localStorage.removeItem("code");
+		}
+	}
+</script>
+<body>
+<nav class="navbar navbar-default">
+	<!-- 引入顶部栏 -->
+	<div th:replace="~{common/topcommon::#topcommon}"></div>
+</nav>
+	<div class="container-fluid main">
+		<div class="row">
+			<div class="col-lg-9 col-xs-12 col-sm-12 col-md-12">
+			<h3>&nbsp &nbsp<span class="glyphicon glyphicon-align-right" aria-hidden="true"></span>&nbsp  &nbsp发现</h3>
+			<hr>
+				<div class="media" th:each="article:${articles}">
+				  <div class="media-left">
+				    <a href="#">
+				      <img class="media-object img-circle  java img-thumbnail" th:src="${article.reader.protrait}">
+				    </a>
+				  </div>
+				  <div class="media-body">
+				    <a th:href="@{/detail(articleid=${article.id},page=1)}"><h4 class="media-heading">[[${article.title}]]</h4></a>
+				   <span th:text="${article.description.length()<250}?${article.description}:${article.description.substring(0,250)}"></span>
+				   <br>
+				    <span class="textdexcription">[[${article.commentcount}]]个回复 · [[${article.viewcount}]]次浏览 · [[${article.create_time}]]</span>
+				  </div>
+				  <hr>
+				</div>
+				
+				<!-- 分页条 -->
+				<nav aria-label="Page navigation">
+				  <ul class="pagination pagination-lg btn-publish">
+				    <li>
+				      <a th:href="@{/pages(page=${paging.pageNumber}-1)}" aria-label="Previous" th:if="${paging.pageNumber} != 1">
+				        <span aria-hidden="true">&laquo;</span>
+				      </a>
+				    </li>
+				    <li th:each="page:${paging.pagelist}" th:class="${page == paging.pageNumber}?'active':''">
+				    <a th:href="@{/pages(page=${page})}">[[${page}]]</a></li>
+				    <li>
+				      <a th:href="@{/pages(page=${paging.pageNumber}+1)}" aria-label="Next" th:if="${paging.pageNumber} != ${paging.pages}">
+				        <span aria-hidden="true">&raquo;</span>
+				      </a>
+				    </li>
+				  </ul>
+				</nav>
+			</div>
+			<div class="col-lg-3 col-xs-12 col-sm-12 col-md-12">
+				<h3>热门话题</h3>
+			</div>
+		</div>
+		
+	</div>
+</body>
+</html> 

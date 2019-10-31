@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>我的最新回复</title>
+<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/comment.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+</head>
+<body>
+	<nav class="navbar navbar-default">
+		<!-- 引入顶部栏 -->
+		<div th:replace="~{common/topcommon::#topcommon}"></div>
+	</nav>
+	<div class="container-fluid main">
+		<div class="row">
+			<div class="col-lg-9 col-xs-12 col-sm-12 col-md-12">
+				<h3>
+					&nbsp &nbsp
+					<span class="glyphicon glyphicon-lamp" aria-hidden="true"></span>
+					&nbsp &nbsp我的最新回复
+				</h3>
+				<hr>
+				<ul class="list-group">
+					<li th:class="${reply.replyatste}?'list-group-item':'list-group-item list-group-item-danger'" th:each="reply:${replylist}">
+						<a th:href="@{/lookreader(reader=${reply.receiverid})}" >[[${reply.receivername}]]</a>
+						<span th:if="${reply.replytype}=='回复'">回复了您对文章《[[${reply.replyariclename}]]》的评论</span>
+						<span th:if="${reply.replytype}=='评论'">评论了您的文章《[[${reply.replyariclename}]]》</span>
+						<a th:href="@{/detail(articleid=${reply.replyaricleid},replyid=${reply.replyid},page=1)}" class="btn btn-success">查看</a>
+					</li>
+				</ul>
+
+				<!-- 引入顶部栏 -->
+				<div th:replace="~{common/topcommon::#pagingbar}"></div>
+			</div>
+			<div class="col-lg-3 col-xs-12 col-sm-12 col-md-12">
+				<!-- 个人中心的侧边栏 -->
+				<div th:replace="~{common/topcommon::#sidecommn}"></div>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>
